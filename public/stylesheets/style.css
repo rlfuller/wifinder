@@ -6,3 +6,41 @@
 a {
   color: #00B7FF;
 } */
+
+body { 
+  padding-top: 70px; 
+  
+}
+
+/*.navbar {
+  margin-bottom: 0;
+}*/
+
+.nav li a {
+  display: inline-block;
+}
+
+iframe {
+  display: block;
+  width: 100%;
+}
+
+.review {
+  padding-bottom: 5px;
+}
+
+.panel-body.review-container {
+  padding-top: 0;
+}
+
+.review-header {
+  margin-bottom: 10px;
+}
+
+.reviewAuthor {
+  margin: 0 5px;
+}
+
+#rating {
+  width: 100px;
+}
