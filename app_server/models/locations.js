@@ -26,4 +26,9 @@ var locationSchema = new mongoose.Schema({
 });
 
 //compile the schema to model
-mongoose.model("Location", locationSchema);
+module.exports.Review = mongoose.model("Review", reviewSchema);
+module.exports.Location = mongoose.model("Location", locationSchema);
+
+
+var seedDB = require("./seed");
+seedDB();
