@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
 var gracefulShutdown; 
 
-var dbURI = "mongodb://localhost/WIFInder";
+var dbURI = process.env.DATABASEURL || "mongodb://localhost/WIFInder";
+
 mongoose.connect(dbURI);
 
 
