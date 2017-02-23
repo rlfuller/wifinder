@@ -31,4 +31,4 @@ module.exports.Location = mongoose.model("Location", locationSchema);
 
 
 var seedDB = require("./seed");
-seedDB();
+//seedDB();
