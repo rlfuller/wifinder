@@ -1,26 +1,40 @@
-/* GET 'home' page */
-module.exports.homelist = function(req, res){
-    res.render("locations-list", {
+var request = require("request");
+
+var apiOptions = {
+    server:"https://webdev-rlfuller.c9users.io"
+};
+apiOptions.server = process.env.HEROKUPATH || "https://webdev-rlfuller.c9users.io";
+
+
+var renderHomePage = function(req, res, responseBody){
+    res.render("locations-list", 
+    {
         title: "WIFInder - find a place to work with wifi",
         pageHeader: {
             title: "WIFInder",
             strapline: "Find places to work with wifi near you!"
         }, 
         sidebar: "Looking for wifi and a seat? WIFInder helps you find places to work when out and about. Perhaps with coffee, food, or a beer? Let WIFInder help you find the place you are looking for.",
-        locations: [{
-            name: "Starbucks",
-            address: "7819 Forest Pine Dr, Charlotte, NC 28273", 
-            rating: 3,
-            facilities: ["Coffee", "Food", "Wifi"],
-            distance: "1.5 miles"
-        },
-        {
-            name: "Central Coffee",
-            address: "719 Louise Ave, Charlotte, NC 28204", 
-            rating: 4,
-            facilities: ["Coffee", "Food", "Wifi"],
-            distance: "3.6 miles"
-        }]
+        locations: responseBody
+    });
+};
+
+/* GET 'home' page */
+module.exports.homelist = function(req, res){
+    var requestOptions, path;
+    path = "/api/locations";
+    requestOptions = {
+      url: apiOptions.server + path,
+      method: "GET",
+      json: {},
+      qs: {
+          lng: -80.8641380,
+          lat: 35.2189070
+      }
+    };
+    request(requestOptions, function(err, response, body){
+        console.log(err, body);
+        renderHomePage(req, res, body);
     });
 };
 
