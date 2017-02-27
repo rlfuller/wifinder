@@ -1,19 +1,19 @@
 var request = require("request");
 
 var apiOptions = {
-    server:"https://webdev-rlfuller.c9users.io"
+    server:"http://localhost:3000"
 };
-apiOptions.server = process.env.HEROKUPATH || "https://webdev-rlfuller.c9users.io";
+apiOptions.server = process.env.HEROKUPATH || "http://localhost:3000";
 
 
 var renderHomePage = function(req, res, responseBody){
-    res.render("locations-list", 
+    res.render("locations-list",
     {
         title: "WIFInder - find a place to work with wifi",
         pageHeader: {
             title: "WIFInder",
             strapline: "Find places to work with wifi near you!"
-        }, 
+        },
         sidebar: "Looking for wifi and a seat? WIFInder helps you find places to work when out and about. Perhaps with coffee, food, or a beer? Let WIFInder help you find the place you are looking for.",
         locations: responseBody
     });
@@ -61,7 +61,7 @@ module.exports.locationInfo = function(req, res){
                        opening: "5:30am",
                        closing: "9:00pm",
                        closed: false
-                   }, 
+                   },
                    {
                        days: "Sunday",
                        opening: "7:00am",
@@ -74,7 +74,7 @@ module.exports.locationInfo = function(req, res){
                     rating: "3",
                     timestamp: "Feb 15, 2017",
                     reviewText: "I've never been inside or used the wifi, but the drive-through is adequate."
-                }, 
+                },
                 {
                     author: "Chester",
                     rating: "3",
@@ -82,7 +82,7 @@ module.exports.locationInfo = function(req, res){
                     reviewText: "Wifi is consistent, but not enough plugs."
                 }]
         }
-        
+
     });
 };
 
