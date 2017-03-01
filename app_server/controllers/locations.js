@@ -34,8 +34,21 @@ module.exports.homelist = function(req, res){
     };
     request(requestOptions, function(err, response, body){
         console.log(err, body);
+        for(var i = 0; i < body.length; i++){
+          body[i].distance = _formatDistance(body[i].distance);
+        }
         renderHomePage(req, res, body);
     });
+
+    var _formatDistance = function(distance){
+      var numDistance, unit;
+
+      numDistance = parseInt(distance,10).toFixed(2);
+      numDistance = Number(numDistance / 1609.344).toFixed(2); //1609.344 meters in a mile
+      unit = "mi";
+
+      return numDistance + unit;
+    }
 };
 
 /* GET 'detail' page */

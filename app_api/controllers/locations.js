@@ -8,20 +8,20 @@ var sendJsonResponse = function(res, status, content){
 
 var theEarth = (function(){
     var earthRadius = 3959;
-    
+
     var getDistanceFromRads = function(rads){
         return parseFloat(rads * earthRadius);
     };
-    
+
     var getRadsFromDistance = function(distance){
         return parseFloat(distance/earthRadius);
     };
-    
+
     return {
         getDistanceFromRads: getDistanceFromRads,
         getRadsFromDistance: getRadsFromDistance
     };
-    
+
     })();
 
 module.exports.locationCreate = function(req, res){
@@ -63,7 +63,7 @@ module.exports.locationsListByDistance = function(req, res){
         //maxDistance: theEarth.getRadsFromDistance(40),
         num: 10
     };
-    
+
     if(!lng || !lat){
         sendJsonResponse(res, 404, {"message":"Latitude and Longitude query parameters are required"});
         return;
@@ -75,11 +75,15 @@ module.exports.locationsListByDistance = function(req, res){
         } else {
             results.forEach(function(doc){
                 locations.push({
-                    distance: theEarth.getDistanceFromRads(doc.dis),
+                    //distance: theEarth.getDistanceFromRads(doc.dis),
+                    //in the documentation for geoNear it says when you set spherical to true
+                    //and pass in a point value then the result will be in meters, not radians
+                    //so the result doesn't need to be converted from radians to meters, which is what theEarth function is doing. 
+                    distance: doc.dis,
                     name: doc.obj.name,
                     address: doc.obj.address,
                     rating: doc.obj.rating,
-                    facilities: doc.obj.facilities, 
+                    facilities: doc.obj.facilities,
                     _id: doc.obj._id
                 });
             });
@@ -89,9 +93,9 @@ module.exports.locationsListByDistance = function(req, res){
 };
 
 module.exports.locationsReadOne = function(req, res){
-    
+
     // Loc.findById(req.params.locationid).exec(function(err, foundLocation){
-    //   sendJsonResponse(res, 200, foundLocation); 
+    //   sendJsonResponse(res, 200, foundLocation);
     // });
     if(req.params && req.params.locationid){
         Loc.findById(req.params.locationid).exec(function(err, foundLocation){
@@ -107,7 +111,7 @@ module.exports.locationsReadOne = function(req, res){
     } else {
         sendJsonResponse(res, 404, {message: "No locationid in request"});
     }
-    
+
 };
 
 module.exports.locationsUpdateOne = function(req, res){
@@ -140,9 +144,9 @@ module.exports.locationsUpdateOne = function(req, res){
                    days: req.body.days2,
                    opening: req.body.opening2,
                    closing: req.body.closing2,
-                   closed: req.body.closed2    
+                   closed: req.body.closed2
                }];
-               
+
                location.save(function(err, savedLocation){
                    if(err){
                        sendJsonResponse(res, 400, err);
@@ -169,5 +173,3 @@ module.exports.locationsDeleteOne = function(req, res){
         sendJsonResponse(res, 404, {"message":"No locationid"});
     }
 };
-
-
