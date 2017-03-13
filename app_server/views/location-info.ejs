@@ -3,9 +3,9 @@
 <div class="row page-header">
     <div class="col-lg-12">
         <h1><%=title %></h1>
-        
+
     </div>
-    
+
 </div>
 <div class="row">
     <div class="col-xs-12 col-md-9">
@@ -18,7 +18,7 @@
                     <% for(var i = 0; i < 5 - location.rating; i++){ %>
                         <span class="glyphicon glyphicon-star-empty"></span>
                     <% }; %>
-                    
+
                 </p>
                 <p>
                     <%=location.address %>
@@ -31,19 +31,19 @@
                     </div>
                     <div class="panel-body">
                         <% location.openingTimes.forEach(function(time){ %>
-                            <p><%=time.days%> : 
+                            <p><%=time.days%> :
                             <% if(time.closed){ %>
                                 closed
                             <%  } else { %>
                                  <%=time.opening%> - <%=time.closing%>
                             <% } %>
-                             
+
                             </p>
                        <% }); %>
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -59,10 +59,10 @@
                             </span>
                             &nbsp;
                         <%  }; %>
-                        
+
                     </div>
                 </div>
-                
+
             </div>
             <div class="col-xs-12 col-sm-6 location-map">
                 <div class="panel panel-primary">
@@ -70,15 +70,15 @@
                         <h2 class="panel-title">Location</h2>
                     </div>
                     <div class="panel-body map">
-                        
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13051.151717760838!2d-80.9042015!3d35.1369654!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3f0b55b32756bd2c!2sStarbucks!5e0!3m2!1sen!2sus!4v1487188244968" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                        <iframe src="https://maps.google.com/maps?q=<%=location.coords.lat%>,<%=location.coords.lng%>&output=embed" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
-                    
+
                 </div>
             </div>
-            
+
         </div>
-        
+
         <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-primary review-panel">
@@ -87,7 +87,7 @@
                     <h2 class="panel-title">Customer Reviews</h2>
                 </div>
                 <div class="panel-body review-container">
-                    
+
                     <% location.reviews.forEach(function(review) { %>
                         <div class="row">
                             <div class="review">
@@ -109,34 +109,34 @@
                                     </div>
                                     <div class="col-xs-12">
                                         <p><%=review.reviewText%></p>
-                                    
+
                                     </div>
                             </div>
                         </div>
-                    
-                    
+
+
                     <% });%>
-                    
-                    
+
+
                 </div>
-                
+
             </div>
         </div>
-        
+
     </div>
     </div>
     <div class="col-xs-12 col-md-3">
             <p>
-                <%=sidebar.context %>
+                <%=title%> <%=sidebar.context %>
             </p>
             <p>
                 <%=sidebar.callToAction%>
             </p>
         </div>
-    
-    
-    
-    
+
+
+
+
 </div>
 
 <% include ./partials/footer %>

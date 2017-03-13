@@ -19,6 +19,19 @@ var renderHomePage = function(req, res, responseBody){
     });
 };
 
+var renderDetailPage = function(req, res, locDetail){
+  res.render("location-info", {
+      title: locDetail.name,
+      pageHeader: {title: locDetail.name},
+      sidebar: {context: "is on WIFInder because we all know we can get wifi there.",
+                callToAction: "If you've been and you like it - or if you don't - please leave a review to help other people just like you."
+                },
+      location: locDetail
+
+  });
+
+};
+
 /* GET 'home' page */
 module.exports.homelist = function(req, res){
     var requestOptions, path;
@@ -53,50 +66,20 @@ module.exports.homelist = function(req, res){
 
 /* GET 'detail' page */
 module.exports.locationInfo = function(req, res){
-    res.render("location-info", {
-        title: "Starbucks",
-        pageHeader: {title: "Starbucks"},
-        sidebar: {context: "Starbucks is on WIFInder because it's Starbucks and we all know we can get wifi there.",
-                  callToAction: "If you've been and you like it - or if you don't - please leave a review to help other people just like you."
-                  },
-        location: {name: "Starbucks",
-                   address: "7819 Forest Pine Dr, Charlotte, NC 28273",
-                   rating: 3,
-                   facilities: ["Coffee", "Food", "Wifi"],
-                   openingTimes: [{
-                       days: "Monday - Friday",
-                       opening: "5:00am",
-                       closing: "9:00pm",
-                       closed: false
-                   },
-                   {
-                       days: "Saturday",
-                       opening: "5:30am",
-                       closing: "9:00pm",
-                       closed: false
-                   },
-                   {
-                       days: "Sunday",
-                       opening: "7:00am",
-                       closing: "8:00pm",
-                       closed: false
-                   }
-                       ],
-                reviews: [{
-                    author: "Rachel Fuller",
-                    rating: "3",
-                    timestamp: "Feb 15, 2017",
-                    reviewText: "I've never been inside or used the wifi, but the drive-through is adequate."
-                },
-                {
-                    author: "Chester",
-                    rating: "3",
-                    timestamp: "Feb 15, 2017",
-                    reviewText: "Wifi is consistent, but not enough plugs."
-                }]
-        }
-
-    });
+  var requestOptions, path;
+  path = "/api/locations/" + req.params.locationid;
+  requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {}
+  };
+  request(requestOptions, function(err, response, body){
+    body.coords = {
+      lng: body.coords[0],
+      lat: body.coords[1]
+    };
+    renderDetailPage(req, res, body);
+  });
 };
 
 /* GET 'add a new review' page */
