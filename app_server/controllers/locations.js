@@ -1,4 +1,5 @@
 var request = require("request");
+var moment = require("moment");
 
 var apiOptions = {
     server:"http://localhost:3000"
@@ -78,6 +79,11 @@ module.exports.locationInfo = function(req, res){
       lng: body.coords[0],
       lat: body.coords[1]
     };
+    //console.log("created on: " + body.reviews[0].createdOn);
+    body.reviews.forEach(function(review){
+      review.createdOn = moment(review.createdOn).format("MMMM Do YYYY, h:mm a");
+    });
+
     renderDetailPage(req, res, body);
   });
 };
