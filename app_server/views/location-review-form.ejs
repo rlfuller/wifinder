@@ -9,7 +9,17 @@
 </div>
 <div class="row">
     <div class="col-xs-12 col-md-6">
-        <form class="form-horizontal" action="" method="POST" role="form">
+        <form class="form-horizontal" action="" method="POST" role="form" id="addReview">
+
+            <% if(error == "val") { %>
+              <div class="alert alert-danger">
+                <strong>All fields required, please try again!</strong>
+              </div>
+
+            <% } %>
+
+
+
             <div class="form-group">
                 <label class="col-xs-10 col-sm-2 control-label" for="name">Name
 

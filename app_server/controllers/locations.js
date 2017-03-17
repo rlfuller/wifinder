@@ -7,7 +7,7 @@ var apiOptions = {
 apiOptions.server = process.env.HEROKUPATH || "http://localhost:3000";
 
 
-var renderHomePage = function(req, res, responseBody){
+var renderHomePage = function(req, res){
     res.render("locations-list",
     {
         title: "WIFInder - find a place to work with wifi",
@@ -15,8 +15,7 @@ var renderHomePage = function(req, res, responseBody){
             title: "WIFInder",
             strapline: "Find places to work with wifi near you!"
         },
-        sidebar: "Looking for wifi and a seat? WIFInder helps you find places to work when out and about. Perhaps with coffee, food, or a beer? Let WIFInder help you find the place you are looking for.",
-        locations: responseBody
+        sidebar: "Looking for wifi and a seat? WIFInder helps you find places to work when out and about. Perhaps with coffee, food, or a beer? Let WIFInder help you find the place you are looking for."
     });
 };
 
@@ -66,7 +65,8 @@ var renderDetailPage = function(req, res, locDetail){
 var renderReviewForm = function(req, res, locDetail){
   res.render("location-review-form", {
       title: "Review " + locDetail.name + " on WIFInder",
-      pageHeader: {title: "Review " + locDetail.name}
+      pageHeader: {title: "Review " + locDetail.name},
+      error: req.query.err
   });
 };
 
@@ -82,34 +82,7 @@ var _showError = function(req, res, status){
 
 /* GET 'home' page */
 module.exports.homelist = function(req, res){
-    var requestOptions, path;
-    path = "/api/locations";
-    requestOptions = {
-      url: apiOptions.server + path,
-      method: "GET",
-      json: {},
-      qs: {
-          lng: -80.8641380,
-          lat: 35.2189070
-      }
-    };
-    request(requestOptions, function(err, response, body){
-        console.log(err, body);
-        for(var i = 0; i < body.length; i++){
-          body[i].distance = _formatDistance(body[i].distance);
-        }
-        renderHomePage(req, res, body);
-    });
-
-    var _formatDistance = function(distance){
-      var numDistance, unit;
-
-      numDistance = parseInt(distance,10).toFixed(2);
-      numDistance = Number(numDistance / 1609.344).toFixed(2); //1609.344 meters in a mile
-      unit = "mi";
-
-      return numDistance + unit;
-    }
+    renderHomePage(req, res);
 };
 
 /* GET 'detail' page */
@@ -143,12 +116,18 @@ module.exports.doAddReview = function(req, res){
     json: postdata
   };
 
-  request(requestOptions, function(err, response, body){
-    if(response.statusCode === 201){
-      res.redirect("/location/" + locationid);
-    } else {
-      _showError(req, res, response.statusCode);
-    }
-  });
+  if(!postdata.author || !postdata.rating || !postdata.reviewText){
+    res.redirect("/location/" + locationid + "/reviews/new?err=val");
+  } else {
+    request(requestOptions, function(err, response, body){
+      if(response.statusCode === 201){
+        res.redirect("/location/" + locationid);
+      } else if(response.statusCode === 400 && body.name && body.name === "ValidationError") {
+        res.redirect("/location/" + locationid + "/reviews/new?err=val");
+      } else {
+        _showError(req, res, response.statusCode);
+      }
+    });
+  }
 
 };

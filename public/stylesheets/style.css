@@ -7,9 +7,9 @@ a {
   color: #00B7FF;
 } */
 
-body { 
-  padding-top: 70px; 
-  
+body {
+  padding-top: 70px;
+
 }
 
 /*.navbar {
@@ -43,4 +43,12 @@ iframe {
 
 #rating {
   width: 100px;
+}
+
+.label-facility {
+  margin-right: 8px;
+}
+
+#filter {
+  margin-left: 4px;
 }
