@@ -26,28 +26,19 @@ var ratingStars = function() {
 };
 
 var locationListCtrl = function($scope, wifinderData){
-  $scope.data = { locations: wifinderData };
+  $scope.message = "Searching for nearby places ...";
+  wifinderData
+  .success(function(data){
+    $scope.message = data.length > 0 ? "" : "No locations found";
+    $scope.data = { locations: data };
+  })
+  .error(function(err){
+    $scope.message = "Sorry, something's gone wrong";
+  });
 };
 
-var wifinderData = function(){
-  return[
-      {
-        name: "Burger King",
-        address: "125 High Street, Reading, RG6 1PS",
-        rating: 3,
-        facilities: ["Hot drinks", "Food", "Premium wifi"],
-        distance: "889.296456",
-        _id: "44"
-      },
-      {
-        name: "Costy",
-        address: "126 High Street, Reading, RG6 1PS",
-        rating: 5,
-        facilities: ["Hot drinks", "Food", "Alcoholic drinks"],
-        distance: "123.7865456",
-        _id: "45"
-      }
-  ];
+var wifinderData = function($http){
+  return $http.get("/api/locations?lng=-80.8641380&lat=35.2189070");
 };
 
 angular
