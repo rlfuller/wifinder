@@ -21,8 +21,8 @@
 
           $scope.message = response.data.length > 0 ? "" : "No locations found nearby";
 
-          $scope.data = response.data;  
-        //  $scope.data = response.data;
+          $scope.data = response.data;
+        
         }, function(error){
           $scope.message = "Sorry, something's gone wrong";
         });
@@ -45,8 +45,14 @@
   };
 
 
+
   angular.module("wifinderApp")
     .controller("homeController", ["$scope", "wifinderData", "geolocation", homeController]);
+
+  //homeController.$inject = ["$scope", "wifinderData", "geolocation"];
+
+  //angular.module("wifinderApp")
+  //  .controller("homeController", homeController);
 
 
 
