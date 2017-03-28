@@ -16,7 +16,7 @@
           <input id="filter" type="text" name="filter" ng-model="textFilter">
 
           <div class="error">
-            
+
               {{message}}
           </div>
 
@@ -32,7 +32,7 @@
 
 
                         </small>
-                        <span class="badge badge-default pull-right">{{location.distance }}</span>
+                        <span class="badge badge-default pull-right">{{location.distance |formatDistance}}</span>
                     </h4>
                     <p class="address">
                         {{location.address }}
