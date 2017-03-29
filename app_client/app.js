@@ -26,4 +26,4 @@
 
   app.config(["$routeProvider", "$locationProvider", config]);
 
-}());
+})();

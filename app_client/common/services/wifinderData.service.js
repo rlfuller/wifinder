@@ -17,4 +17,4 @@
   //angular.module("wifinderApp")
   //  .service("wifinderData", wifinderData);
   angular.module("wifinderApp").service("wifinderData", ["$http", wifinderData]);
-}());
+})();
