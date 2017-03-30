@@ -20,24 +20,29 @@
         .then(function(response){
 
           $scope.message = response.data.length > 0 ? "" : "No locations found nearby";
+          $scope.level = "info";
 
           $scope.data = response.data;
-        
+          console.log($scope.message.length);
         }, function(error){
           $scope.message = "Sorry, something's gone wrong";
+          $scope.level = "warning";
         });
     };
     console.log("rachel", $scope);
 
+
     $scope.showError = function(error){
       $scope.$apply(function(){
         $scope.message = error.message;
+        $scope.level = "warning";
       });
     };
 
     $scope.noGeo = function(){
       $scope.$apply(function(){
         $scope.message = "Geolocation is not supported by this browser.";
+        $scope.level = "warning";
       });
     };
       geolocation.getPosition($scope.getData,$scope.showError, $scope.noGeo);
@@ -56,4 +61,4 @@
 
 
 
-}());
+})();

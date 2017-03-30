@@ -5,10 +5,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-8">
 
-      <label for="filter">Filter Results</label>
-      <input id="filter" type="text" name="filter" ng-model="textFilter">
+      <div class="form-group" ng-hide="message">
+        <label for="filter">Filter Results</label>
+        <input class="form-control" id="filter" type="text" name="filter" ng-model="textFilter">
+      </div>
 
-      <div class="error">
+
+      <div class="error alert alert-{{level}}" ng-hide="message.length<1">
         {{message}}
       </div>
 

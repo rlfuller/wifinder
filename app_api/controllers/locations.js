@@ -78,7 +78,7 @@ module.exports.locationsListByDistance = function(req, res){
                     //distance: theEarth.getDistanceFromRads(doc.dis),
                     //in the documentation for geoNear it says when you set spherical to true
                     //and pass in a point value then the result will be in meters, not radians
-                    //so the result doesn't need to be converted from radians to meters, which is what theEarth function is doing. 
+                    //so the result doesn't need to be converted from radians to meters, which is what theEarth function is doing.
                     distance: doc.dis,
                     name: doc.obj.name,
                     address: doc.obj.address,

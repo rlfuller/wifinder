@@ -52,3 +52,12 @@ iframe {
 #filter {
   margin-left: 4px;
 }
+
+.error {
+  background: rgba(220,211,196, .5);
+  border: none;
+}
+
+.alert-warning {
+  color: red;
+}
