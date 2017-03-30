@@ -13,7 +13,7 @@
   // }]);
 
 
-  function config($routeProvider, $locationProvider){
+  function config($routeProvider, $locationProvider, $sceDelegateProvider){
     $routeProvider
         .when("/", {
           controller: "homeController",
@@ -23,11 +23,17 @@
           templateUrl: "/common/views/genericText.view.html",
           controller: "aboutController"
         })
+        .when("/location/:locationid",{
+          templateUrl: "/locationDetail/locationDetail.view.html",
+          controller: "locationDetailController"
+        })
         .otherwise({redirectTo: "/"});
 
         $locationProvider.html5Mode(true).hashPrefix("");
+
+        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://maps.google.com/**']);
   };
 
-  app.config(["$routeProvider", "$locationProvider", config]);
+  app.config(["$routeProvider", "$locationProvider", "$sceDelegateProvider",config]);
 
 })();

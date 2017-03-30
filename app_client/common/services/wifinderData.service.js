@@ -6,8 +6,13 @@
       //return $http.get("/api/locations?lng=-80.8641380&lat=35.2189070)";
     };
 
+    var locationById = function(locationid){
+      return $http.get("/api/locations/" + locationid);
+    };
+
     return {
-      locationByCoords: locationByCoords
+      locationByCoords: locationByCoords,
+      locationById: locationById
     };
 
   };

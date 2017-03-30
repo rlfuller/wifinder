@@ -1,0 +1,99 @@
+<navigation></navigation>
+
+<div class="container">
+  <page-header content="pageHeader"></page-header>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-9">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <p class="rating" rating-stars rating="response.location.rating"></p>
+          <p>
+            {{response.location.address}}
+          </p>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">
+                Hours of Operation
+              </h2>
+            </div>
+            <div class="panel-body">
+              <!-- Hours of Operation go here -->
+              <p ng-repeat="time in response.location.openingTimes" ng-switch on="time.closed">
+                {{time.days}} :
+                <span class="opening-time" ng-switch-when="true">closed </span>
+                <span class="opening-time" ng-switch-default>
+                  {{time.opening + " - " + time.closing}}
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">
+                Amenities
+              </h2>
+            </div>
+            <div class="panel-body">
+              <span class="label label-warning label-facility" ng-repeat="facility in response.location.facilities">
+                <span class="glyphicon glyphicon-ok">
+                </span>
+                {{facility}}
+              </span>
+              &nbsp;
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 location-map">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">Location</h2>
+            </div>
+            <div class="panel-body map" ng-src="{{getIframeSrc}}">
+            <iframe src="{{'https://maps.google.com/maps?q=(' + response.location.coords[1] + ',' + response.location.coords[0] + ')&output=embed'}}" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-primary review-panel">
+            <div class="panel-heading">
+              <a class="btn btn-default pull-right" href="">Add Review</a>
+              <h2 class="panel-title">Customer Reviews</h2>
+            </div>
+            <div class="panel-body review-container">
+              <div class="review" ng-repeat="review in response.location.reviews | orderBy:'createdOn':true">
+                <div class="row">
+                  <div class="well well-sm review-header">
+                    <span class="rating" rating-stars rating="review.rating"></span>
+                    <span class="reviewAuthor">
+                      {{review.author}}
+                    </span>
+                    <span class="reviewTimestamp">
+                      {{review.createdOn | date: 'MMMM d, yyyy'}}
+                    </span>
+                  </div>
+                  <div class="col-xs-12">
+                    <p ng-bind-html="review.reviewText | addHtmlLineBreaks"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <p class="lead">
+        {{response.location.name}} is on WIFInder because we all know we can get wifi there.
+      </p>
+      <p>
+        If you've been and you like it - or if you don't - please leave a review to help other people just like you.
+      </p>
+    </div>
+</div>
+
+
+  <footer-generic></footer-generic>
+</div>
