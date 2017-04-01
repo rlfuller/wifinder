@@ -57,9 +57,9 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 // rlf - app.use('/', routes);
 app.use("/api", routesAPI);
 app.use(function(req, res){
- //res.sendfile(path.join(__dirname, 'app_client', 'index.html'));
- res.statusCode=404;
- res.send();
+ res.sendfile(path.join(__dirname, 'app_client', 'index.html'));
+ //res.statusCode=404;
+ //res.send();
 });
 //app.use('/users', users);
 

@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module("wifinderApp",["ngRoute", "ngSanitize"]);
+  var app = angular.module("wifinderApp",["ngRoute", "ngSanitize", "ui.bootstrap"]);
 
   // app.config(["$routeProvider","$locationProvider", function($routeProvider, $locationProvider){
   //   $routeProvider

@@ -61,3 +61,7 @@ iframe {
 .alert-warning {
   color: red;
 }
+
+#btn-submit {
+  margin-right: 5px;
+}
